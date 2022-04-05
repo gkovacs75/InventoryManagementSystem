@@ -1,0 +1,69 @@
+﻿@using IMS.CoreBusiness
+@inject IViewInventoriesByNameUseCase ViewInventoriesByNameUseCase
+
+<div class="input-group mb-3">
+	<input type="text" class="form-control form-control-lg" placeholder="Type Inventory Name Here to Search" @bind-value="inventoryNameToSearch" @bind-value:event="oninput" />
+	<button type="button" class="input-group-text btn-success" @onclick="@(async()=>{await ViewInventories();})">Search</button>
+</div>
+
+@if (this.DisplaySearchResults && this.inventories != null && selectedInventory == null)
+{
+	<div style="overflow-y:auto; max-height:300px; border:1px solid silver;padding-top:5px;">
+		<ul style="list-style-type:none">
+			@foreach (var inv in this.inventories)
+			{
+				<li style="cursor:pointer" @onclick="@(async () => { await SelectInventory(inv); })" @key=inv.InventoryId>@inv.InventoryName</li>
+			}
+		</ul>
+	</div>
+}
+
+
+@code {
+
+	private string? _inventoryNameToSearch;
+
+	public string? inventoryNameToSearch
+	{
+		get => _inventoryNameToSearch;
+		set
+		{
+			_inventoryNameToSearch = value;
+
+			if (!String.IsNullOrEmpty(_inventoryNameToSearch) && _inventoryNameToSearch.Length > 2)
+			{
+				ViewInventories();
+			}
+		}
+	}
+
+	private List<Inventory>? inventories;
+	private Inventory? selectedInventory;
+
+	[Parameter]
+	public EventCallback<List<Inventory>> OnSearchInventories { get; set; }
+
+	[Parameter]
+	public bool DisplaySearchResults { get; set; } = false;
+
+	[Parameter]
+	public EventCallback<Inventory> OnSelectInventory { get; set; }
+
+	private async Task ViewInventories()
+	{
+		inventories = (await ViewInventoriesByNameUseCase.ExecuteAsync(inventoryNameToSearch ?? String.Empty))?.ToList();
+
+		await OnSearchInventories.InvokeAsync(inventories);
+
+		this.selectedInventory = null;
+
+		StateHasChanged();
+	}
+
+	private async Task SelectInventory(Inventory inventory)
+	{
+		await OnSelectInventory.InvokeAsync(inventory);
+
+		selectedInventory = inventory;
+	}
+}

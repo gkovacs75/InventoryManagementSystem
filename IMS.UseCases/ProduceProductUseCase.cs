@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace IMS.UseCases
 {
-    public class ProduceProductUseCase
+    public class ProduceProductUseCase : IProduceProductUseCase
     {
         private readonly IInventoryRepository inventoryRepository;
         private readonly IProductRepository productRepository;
@@ -27,11 +27,12 @@ namespace IMS.UseCases
             this.productTransactionRepository = productTransactionRepository;
         }
 
-        public async Task ExecuteAsync(string productionNumber, Product product, int quantity, string doneBy)
+        public async Task ExecuteAsync(string productionNumber, Product product, int quantity, double price, string doneBy)
         {
-            await this.productTransactionRepository.ProduceAsync(productionNumber, product, quantity, doneBy);
+                                                          
+            await this.productTransactionRepository.ProduceAsync(productionNumber, product, quantity, price, doneBy);
 
-            product.Quantity+=quantity;
+            product.Quantity += quantity;
 
             await this.productRepository.UpdateProductAsync(product);
         }

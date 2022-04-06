@@ -1,5 +1,6 @@
 ﻿using IMS.CoreBusiness;
 using IMS.UseCases.PluginInterfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,13 +13,26 @@ namespace IMS.Plugins.EFCore
     {
         private readonly IMSContext db;
 
-        public ProductTransactionRepository(IMSContext db)
+        public ProductTransactionRepository(IMSContext db, IProductRepository productRepository)
         {
             this.db = db;
+            ProductRepository = productRepository;
         }
+
+        public IProductRepository ProductRepository { get; }
 
         public async Task ProduceAsync(string productionNumber, Product product, int quantity, double price, string doneBy)
         {
+            var prod = await this.ProductRepository.GetProductByIdAsync(product.ProductId);
+            
+            if (prod != null)
+            {
+                foreach (var pi in prod.ProductInventories)
+                {
+                    pi.Inventory.Quantity-=quantity*pi.InventoryQuantity;
+                }
+            }
+
             this.db.ProductTransactions.Add(new ProductTransaction
             {
                 ProductionNumber = productionNumber,

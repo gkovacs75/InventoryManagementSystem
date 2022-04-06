@@ -12,24 +12,24 @@ namespace IMS.Plugins.EFCore
     public class ProductTransactionRepository : IProductTransactionRepository
     {
         private readonly IMSContext db;
+        private readonly IProductRepository productRepository;
 
-        public ProductTransactionRepository(IMSContext db, IProductRepository productRepository)
+        public ProductTransactionRepository(IMSContext db, IProductRepository productRepository
+            )
         {
             this.db = db;
-            ProductRepository = productRepository;
+            this.productRepository = productRepository;
         }
-
-        public IProductRepository ProductRepository { get; }
 
         public async Task ProduceAsync(string productionNumber, Product product, int quantity, double price, string doneBy)
         {
-            var prod = await this.ProductRepository.GetProductByIdAsync(product.ProductId);
-            
+            var prod = await this.productRepository.GetProductByIdAsync(product.ProductId);
+
             if (prod != null)
             {
                 foreach (var pi in prod.ProductInventories)
                 {
-                    pi.Inventory.Quantity-=quantity*pi.InventoryQuantity;
+                    pi.Inventory.Quantity -= quantity * pi.InventoryQuantity;
                 }
             }
 
@@ -46,6 +46,7 @@ namespace IMS.Plugins.EFCore
             });
 
             await this.db.SaveChangesAsync();
+
         }
     }
 }

@@ -19,7 +19,8 @@ namespace IMS.UseCases
             IInventoryRepository inventoryRepository,
             IProductRepository productRepository,
             IInventoryTransactionRepository inventoryTransactionRepository,
-            IProductTransactionRepository productTransactionRepository)
+            IProductTransactionRepository productTransactionRepository
+            )
         {
             this.inventoryRepository = inventoryRepository;
             this.productRepository = productRepository;
@@ -29,12 +30,13 @@ namespace IMS.UseCases
 
         public async Task ExecuteAsync(string productionNumber, Product product, int quantity, double price, string doneBy)
         {
-                                                          
+
             await this.productTransactionRepository.ProduceAsync(productionNumber, product, quantity, price, doneBy);
 
             product.Quantity += quantity;
 
             await this.productRepository.UpdateProductAsync(product);
+            throw new NotImplementedException();
         }
     }
 }

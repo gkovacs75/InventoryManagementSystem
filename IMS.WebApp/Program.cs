@@ -27,6 +27,7 @@ builder.Services.AddDbContext<IMSContext>(options => { options.UseInMemoryDataba
 builder.Services.AddTransient<IInventoryRepository, InventoryRepository>();
 builder.Services.AddTransient<IProductRepository, ProductRepository>();
 builder.Services.AddTransient<IInventoryTransactionRepository, InventoryTransactionRepository>();
+builder.Services.AddTransient<IProductTransactionRepository, ProductTransactionRepository>();
 
 // DI Use Cases
 builder.Services.AddTransient<IViewInventoriesByNameUseCase, ViewInventoriesByNameUseCase>();
@@ -41,7 +42,7 @@ builder.Services.AddTransient<IEditProductUseCase, EditProductUseCase>();
 builder.Services.AddTransient<IDeleteProductUseCase, DeleteProductUseCase>();
 builder.Services.AddTransient<IPurchaseInventoryUseCase, PurchaseInventoryUseCase>();
 builder.Services.AddTransient<IValidateEnoughInventoriesForProducingUseCase, ValidateEnoughInventoriesForProducingUseCase>();
-//builder.Services.AddTransient<IProduceProductUseCase, ProduceProductUseCase>();
+builder.Services.AddTransient<IProduceProductUseCase, ProduceProductUseCase>();
 
 var app = builder.Build();
 

@@ -36,7 +36,7 @@ namespace IMS.UseCases
             product.Quantity += quantity;
 
             await this.productRepository.UpdateProductAsync(product);
-            throw new NotImplementedException();
+            
         }
     }
 }

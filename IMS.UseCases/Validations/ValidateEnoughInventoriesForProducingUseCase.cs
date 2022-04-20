@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IMS.UseCases
+namespace IMS.UseCases.Validations
 {
     public class ValidateEnoughInventoriesForProducingUseCase : IValidateEnoughInventoriesForProducingUseCase
     {
@@ -26,7 +26,7 @@ namespace IMS.UseCases
                 if (pi.InventoryQuantity * quantity > pi.Inventory.Quantity)
                 {
                     return false;
-                }                
+                }
             }
 
             return true;

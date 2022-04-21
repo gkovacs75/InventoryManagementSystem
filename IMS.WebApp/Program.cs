@@ -1,7 +1,9 @@
 using IMS.Plugins.EFCore;
 using IMS.UseCases;
+using IMS.UseCases.Activities;
 using IMS.UseCases.Interfaces;
 using IMS.UseCases.PluginInterfaces;
+using IMS.UseCases.Reports;
 using IMS.UseCases.Validations;
 using IMS.WebApp.Areas.Identity;
 using IMS.WebApp.Data;
@@ -46,7 +48,7 @@ builder.Services.AddTransient<IPurchaseInventoryUseCase, PurchaseInventoryUseCas
 builder.Services.AddTransient<IValidateEnoughInventoriesForProducingUseCase, ValidateEnoughInventoriesForProducingUseCase>();
 builder.Services.AddTransient<IProduceProductUseCase, ProduceProductUseCase>();
 builder.Services.AddTransient<ISellProductUseCase, SellProductUseCase>();
-
+builder.Services.AddTransient<ISearchInventoryTransactionsUseCase, SearchInventoryTransactionsUseCase>();
 
 var app = builder.Build();
 

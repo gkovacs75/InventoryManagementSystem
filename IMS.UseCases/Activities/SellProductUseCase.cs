@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IMS.UseCases
+namespace IMS.UseCases.Activities
 {
     public class SellProductUseCase : ISellProductUseCase
     {
@@ -22,11 +22,11 @@ namespace IMS.UseCases
 
         public async Task ExecuteAsync(string salesOrderNumber, Product product, int quantity, string doneBy)
         {
-            await this.productTransactionRepository.SellProduceAsync(salesOrderNumber, product, quantity, product.Price, doneBy);
+            await productTransactionRepository.SellProduceAsync(salesOrderNumber, product, quantity, product.Price, doneBy);
 
             product.Quantity -= quantity;
 
-            await this.productRepository.UpdateProductAsync(product);
+            await productRepository.UpdateProductAsync(product);
         }
     }
 }

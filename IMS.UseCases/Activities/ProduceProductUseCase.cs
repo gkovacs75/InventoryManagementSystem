@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace IMS.UseCases
+namespace IMS.UseCases.Activities
 {
     public class ProduceProductUseCase : IProduceProductUseCase
     {
@@ -31,12 +31,12 @@ namespace IMS.UseCases
         public async Task ExecuteAsync(string productionNumber, Product product, int quantity, string doneBy)
         {
 
-            await this.productTransactionRepository.ProduceAsync(productionNumber, product, quantity, product.Price, doneBy);
+            await productTransactionRepository.ProduceAsync(productionNumber, product, quantity, product.Price, doneBy);
 
             product.Quantity += quantity;
 
-            await this.productRepository.UpdateProductAsync(product);
-            
+            await productRepository.UpdateProductAsync(product);
+
         }
     }
 }

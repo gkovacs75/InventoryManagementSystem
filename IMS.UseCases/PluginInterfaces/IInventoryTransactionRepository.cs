@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace IMS.UseCases.PluginInterfaces
 {
-	public interface IInventoryTransactionRepository
-	{
-		Task PurchaseAsync(string poNumber, Inventory Inventory, int quantity, double price, string doneBy);
-	}
+    public interface IInventoryTransactionRepository
+    {
+        Task PurchaseAsync(string poNumber, Inventory Inventory, int quantity, double price, string doneBy);
+
+        Task<IEnumerable<InventoryTransaction>> GetInventoryTransactionsAsync(string inventoryName, DateTime? dateForm, DateTime? dateTo, InventoryTransactionType? transactionType);
+    }
 }

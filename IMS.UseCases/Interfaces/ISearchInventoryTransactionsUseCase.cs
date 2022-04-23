@@ -1,6 +1,6 @@
 ﻿using IMS.CoreBusiness;
 
-namespace IMS.UseCases.Reports
+namespace IMS.UseCases
 {
     public interface ISearchInventoryTransactionsUseCase
     {

@@ -1,9 +1,9 @@
 using IMS.Plugins.EFCore;
 using IMS.UseCases;
-using IMS.UseCases.Activities;
-using IMS.UseCases.Interfaces;
+//using IMS.UseCases.Activities;
+//using IMS.UseCases.Interfaces;
 using IMS.UseCases.PluginInterfaces;
-using IMS.UseCases.Reports;
+//using IMS.UseCases.Reports;
 using IMS.UseCases.Validations;
 using IMS.WebApp.Areas.Identity;
 using IMS.WebApp.Data;

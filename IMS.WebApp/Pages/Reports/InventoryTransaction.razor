@@ -1,5 +1,86 @@
-﻿<h3>InventoryTransaction</h3>
+﻿@page "/inventoryreport"
+
+@inject ISearchInventoryTransactionsUseCase SearchInventoryTransactionsUseCase
+
+<h3>Inventory Transactions</h3>
+
+<br />
+
+<div class="row">
+	<div class="column">
+		<label for="inv">Inventory Name</label>
+		<input type="text" id="inv" class="form-control" @bind-value="invName" />
+	</div>
+	<div class="column">
+		<label for="df">Date From</label>
+		<input type="text" id="df" class="form-control" @bind-value="dateFrom" />
+	</div>
+	<div class="column">
+		<label for="dt">Date To</label>
+		<input type="text" id="dt" class="form-control" @bind-value="dateTo" />
+	</div>
+	<div class="column">
+		<label for="at">Activity Type</label>
+		<select id="at" class="form-control" @bind="activityTypeId">
+			<option id="1">Purchase Inventory</option>
+			<option id="2">Produce Product</option>
+		</select>
+	</div>
+	<div class="column">
+		<label>%nbsp;</label>
+		<button type="button" class="btn btn-primary form-control" @onclick="SearchInventories">Search</button>
+	</div>
+</div>
+
+@if (inventoryTransactions != null)
+{
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Date</th>
+				<th>Inventory</th>
+				<th>Activity</th>
+				<th>Qty Before</th>
+				<th>Qty After</th>
+				<th>PO#</th>
+				<th>Production#</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (var it in inventoryTransactions)
+			{
+				<tr>
+					<td>@it.TransactionDate.ToString("MM/dd/yyyy")</td>
+					<td>@it.Inventory.InventoryName</td>
+					<td>
+						@if (it.ActivityType == InventoryTransactionType.PurchaseInventory)
+						{
+							<text>Purchase</text>
+						}
+						else if (it.ActivityType == InventoryTransactionType.ProduceProduct)
+						{
+							<text>Produce</text>
+						}
+					</td>
+					<td>@it.QuantityBefore</td>
+					<td>@it.QuantityAfter</td>
+					<td>@it.PONumber</td>
+					<td>@it.ProductionNumber</td>
+				</tr>
+			}
+		</tbody>
+	</table>
+}
 
 @code {
+	private string invName;
+	private DateTime dateFrom;
+	private DateTime dateTo;
+	private int activityTypeId;
+	private IEnumerable<IMS.CoreBusiness.InventoryTransaction> inventoryTransactions;
 
+	private async Task SearchInventories()
+	{
+		//inventoryTransactions = await SearchInventoryTransactionsUseCase.ExecuteAsync();
+	}
 }

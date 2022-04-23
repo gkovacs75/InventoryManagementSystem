@@ -1,6 +1,6 @@
 ﻿using IMS.CoreBusiness;
 
-namespace IMS.UseCases.Interfaces
+namespace IMS.UseCases
 {
     public interface ISellProductUseCase
     {

@@ -47,7 +47,7 @@ namespace IMS.Plugins.EFCore
                             (!transactionType.HasValue || it.ActivityType == transactionType)
                         select it;
 
-            return await query.ToListAsync();
+            return await query.Include(x => x.Inventory).ToListAsync();
         }
     }
 }

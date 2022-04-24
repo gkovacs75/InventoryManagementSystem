@@ -77,5 +77,10 @@ namespace IMS.Plugins.EFCore
 
             await this.db.SaveChangesAsync();
         }
-    }
+
+        public async Task<IEnumerable<ProductTransaction>> GetProductTransactionsAsync(string productName, DateTime? dateFrom, DateTime? dateTo, ProductTransactionType? transactionType)
+		{
+			throw new NotImplementedException();
+		}
+	}
 }

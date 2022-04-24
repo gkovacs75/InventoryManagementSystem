@@ -14,8 +14,7 @@ namespace IMS.Plugins.EFCore
         private readonly IMSContext db;
         private readonly IProductRepository productRepository;
 
-        public ProductTransactionRepository(IMSContext db, IProductRepository productRepository
-            )
+        public ProductTransactionRepository(IMSContext db, IProductRepository productRepository)
         {
             this.db = db;
             this.productRepository = productRepository;
@@ -29,7 +28,21 @@ namespace IMS.Plugins.EFCore
             {
                 foreach (var pi in prod.ProductInventories)
                 {
+                    int qtyBefore = pi.Inventory.Quantity;
+
                     pi.Inventory.Quantity -= quantity * pi.InventoryQuantity;
+
+                    this.db.InventoryTransactions.Add(new InventoryTransaction
+                    {
+                        ProductionNumber = productionNumber,
+                        InventoryId = pi.Inventory.InventoryId,
+                        QuantityBefore = qtyBefore,
+                        ActivityType = InventoryTransactionType.ProduceProduct,
+                        QuantityAfter = pi.Inventory.Quantity,
+                        TransactionDate = DateTime.Now,
+                        DoneBy = doneBy,
+                        UnitPrice = price
+                    });
                 }
             }
 

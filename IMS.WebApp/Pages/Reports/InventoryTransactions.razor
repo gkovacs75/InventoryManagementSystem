@@ -3,31 +3,31 @@
 @inject ISearchInventoryTransactionsUseCase SearchInventoryTransactionsUseCase
 
 <h3>Inventory Transactions</h3>
-
 <br />
 
 <div class="row">
-	<div class="column">
+	<div class="col">
 		<label for="inv">Inventory Name</label>
 		<input type="text" id="inv" class="form-control" @bind-value="invName" />
 	</div>
-	<div class="column">
+	<div class="col">
 		<label for="df">Date From</label>
-		<input type="text" id="df" class="form-control" @bind-value="dateFrom" />
+		<input type="date" id="df" class="form-control" @bind-value="dateFrom" />
 	</div>
-	<div class="column">
+	<div class="col">
 		<label for="dt">Date To</label>
-		<input type="text" id="dt" class="form-control" @bind-value="dateTo" />
+		<input type="date" id="dt" class="form-control" @bind-value="dateTo" />
 	</div>
-	<div class="column">
+	<div class="col">
 		<label for="at">Activity Type</label>
 		<select id="at" class="form-control" @bind="activityTypeId">
-			<option id="1">Purchase Inventory</option>
-			<option id="2">Produce Product</option>
+			<option value="0"></option>
+			<option value="1">Purchase Inventory</option>
+			<option value="2">Produce Product</option>
 		</select>
 	</div>
-	<div class="column">
-		<label>%nbsp;</label>
+	<div class="col">
+		<label>&nbsp;</label>
 		<button type="button" class="btn btn-primary form-control" @onclick="SearchInventories">Search</button>
 	</div>
 </div>
@@ -74,13 +74,17 @@
 
 @code {
 	private string invName;
-	private DateTime dateFrom;
-	private DateTime dateTo;
-	private int activityTypeId;
+	private DateTime? dateFrom;
+	private DateTime? dateTo;
+	private int activityTypeId = 0;
 	private IEnumerable<InventoryTransaction> inventoryTransactions;
 
 	private async Task SearchInventories()
 	{
-		//inventoryTransactions = await SearchInventoryTransactionsUseCase.ExecuteAsync();
+		InventoryTransactionType? inventoryTransactionType = null;
+
+		if (activityTypeId != null) inventoryTransactionType = (InventoryTransactionType)activityTypeId;
+
+		inventoryTransactions = await SearchInventoryTransactionsUseCase.ExecuteAsync(invName, dateFrom, dateTo, inventoryTransactionType);
 	}
 }

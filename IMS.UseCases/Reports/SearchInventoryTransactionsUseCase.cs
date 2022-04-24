@@ -12,7 +12,7 @@ namespace IMS.UseCases
             this.inventoryTransactionRepository = inventoryTransactionRepository;
         }
 
-        public async Task<IEnumerable<InventoryTransaction>> ExecuteAsync(string inventoryName, DateTime dateForm, DateTime dateTo, InventoryTransactionType transactionType)
+        public async Task<IEnumerable<InventoryTransaction>> ExecuteAsync(string inventoryName, DateTime? dateForm, DateTime? dateTo, InventoryTransactionType? transactionType)
         {
             return await this.inventoryTransactionRepository.GetInventoryTransactionsAsync(inventoryName, dateForm, dateTo, transactionType);
         }

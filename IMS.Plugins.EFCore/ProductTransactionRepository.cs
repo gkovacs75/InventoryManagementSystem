@@ -62,7 +62,7 @@ namespace IMS.Plugins.EFCore
 
         }
 
-        public async Task SellProduceAsync(string salesOrderNumber, Product product, int quantity, double price, string doneBy)
+        public async Task SellProductAsync(string salesOrderNumber, Product product, int quantity, double price, string doneBy)
         {
             this.db.ProductTransactions.Add(new ProductTransaction
             {
@@ -72,7 +72,8 @@ namespace IMS.Plugins.EFCore
                 QuantityAfter = product.Quantity - quantity,
                 TransactionDate = DateTime.Now,
                 DoneBy = doneBy,
-                UnitPrice = price
+                UnitPrice = price,
+                ActivityType = ProductTransactionType.SellProduct
             });
 
             await this.db.SaveChangesAsync();
@@ -85,7 +86,7 @@ namespace IMS.Plugins.EFCore
                         where
                             (string.IsNullOrWhiteSpace(productName) || prod.ProductName.Contains(productName, StringComparison.OrdinalIgnoreCase)) &&
                             (!dateFrom.HasValue || pt.TransactionDate >= dateFrom.Value.Date) &&
-                            (!dateTo.HasValue || pt.TransactionDate <= dateTo.Value.Date) &&
+                            (!dateTo.HasValue || pt.TransactionDate <= dateTo.Value) &&
                             (!transactionType.HasValue || pt.ActivityType == transactionType)
                         select pt;
             return await query.Include(x => x.Product).ToListAsync();

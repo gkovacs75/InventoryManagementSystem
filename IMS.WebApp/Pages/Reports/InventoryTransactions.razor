@@ -74,8 +74,8 @@
 
 @code {
 	private string invName;
-	private DateTime? dateFrom;
-	private DateTime? dateTo;
+	private DateTime? dateFrom = DateTime.Today;
+	private DateTime? dateTo = DateTime.Today.AddHours(23).AddMinutes(59).AddSeconds(59);
 	private int activityTypeId = 0;
 	private IEnumerable<InventoryTransaction> inventoryTransactions;
 

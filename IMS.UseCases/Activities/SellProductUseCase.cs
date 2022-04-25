@@ -16,7 +16,7 @@ namespace IMS.UseCases
 
         public async Task ExecuteAsync(string salesOrderNumber, Product product, int quantity, string doneBy)
         {
-            await productTransactionRepository.SellProduceAsync(salesOrderNumber, product, quantity, product.Price, doneBy);
+            await productTransactionRepository.SellProductAsync(salesOrderNumber, product, quantity, product.Price, doneBy);
 
             product.Quantity -= quantity;
 

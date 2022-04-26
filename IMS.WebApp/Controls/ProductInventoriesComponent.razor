@@ -50,7 +50,7 @@
 
 	private async Task OnSelectInventory(Inventory inventory)
 	{
-		if (!ProductInventories.Any(x => x.Inventory.InventoryName.Equals(inventory.InventoryName, StringComparison.OrdinalIgnoreCase)))
+		if (!ProductInventories.Any(x => x.Inventory.InventoryName.ToLower() == inventory.InventoryName))
 		{
 			this.ProductInventories.Add(new ProductInventory { InventoryId = inventory.InventoryId, Inventory = inventory });
 		}

@@ -25,7 +25,7 @@ namespace IMS.Plugins.EFCore
 
         public async Task AddProductAsync(Product product)
         {
-            if (db.Products.Any(x => x.ProductName.Equals(product.ProductName, StringComparison.OrdinalIgnoreCase)))
+            if (db.Products.Any(x => x.ProductName.ToLower() == product.ProductName))
             {
                 return;
             }
@@ -42,7 +42,7 @@ namespace IMS.Plugins.EFCore
 
         public async Task UpdateProductAsync(Product product)
         {
-            if (db.Products.Any(x => x.ProductName.Equals(product.ProductName, StringComparison.OrdinalIgnoreCase))) return;
+            if (db.Products.Any(x => x.ProductName.ToLower() == product.ProductName)) return;
 
             var prod = await db.Products.FindAsync(product.ProductId);
 

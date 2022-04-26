@@ -1,17 +1,11 @@
 using IMS.Plugins.EFCore;
 using IMS.UseCases;
-//using IMS.UseCases.Activities;
-//using IMS.UseCases.Interfaces;
 using IMS.UseCases.PluginInterfaces;
-//using IMS.UseCases.Reports;
 using IMS.UseCases.Validations;
 using IMS.WebApp.Areas.Identity;
 using IMS.WebApp.Data;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -25,7 +19,12 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
 builder.Services.AddSingleton<WeatherForecastService>();
-builder.Services.AddDbContext<IMSContext>(options => { options.UseInMemoryDatabase("IMS"); });
+
+builder.Services.AddDbContext<IMSContext>(options =>
+{
+    //options.UseInMemoryDatabase("IMS");
+    options.UseSqlServer(builder.Configuration.GetConnectionString("InventoryManagement"));
+});
 
 // DI Repositories
 builder.Services.AddTransient<IInventoryRepository, InventoryRepository>();

@@ -20,7 +20,7 @@ namespace IMS.Plugins.EFCore
 
         public async Task<List<Product>> GetProductsByNameAsync(string name)
         {
-            return await this.db.Products.Where(x => (x.ProductName.Contains(name, StringComparison.OrdinalIgnoreCase) || String.IsNullOrWhiteSpace(name)) && x.IsActive == true).ToListAsync();
+            return await this.db.Products.Where(x => (x.ProductName.ToLower().IndexOf(name.ToLower()) >= 0 || String.IsNullOrWhiteSpace(name)) && x.IsActive == true).ToListAsync();
         }
 
         public async Task AddProductAsync(Product product)

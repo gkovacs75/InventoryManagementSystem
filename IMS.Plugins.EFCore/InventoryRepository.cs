@@ -15,9 +15,7 @@ namespace IMS.Plugins.EFCore
 
         public async Task<IEnumerable<Inventory>> GetInventoriesByName(string name)
         {
-            return await this.db.Inventories.Where(x => x.InventoryName.ToLower().IndexOf(name.ToLower()) >= 0).ToListAsync();
-
-            //return await this.db.Inventories.Where(x => x.InventoryName.Contains(name, StringComparison.OrdinalIgnoreCase) || String.IsNullOrWhiteSpace(name)).ToListAsync();
+            return await this.db.Inventories.Where(x => x.InventoryName.ToLower().IndexOf(name.ToLower()) >= 0).ToListAsync();            
         }
 
         public async Task AddInventoryAsync(Inventory inventory)

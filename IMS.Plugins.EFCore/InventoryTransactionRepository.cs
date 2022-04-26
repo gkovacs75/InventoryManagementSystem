@@ -41,7 +41,7 @@ namespace IMS.Plugins.EFCore
             var query = from it in db.InventoryTransactions
                         join inv in db.Inventories on it.InventoryId equals inv.InventoryId
                         where
-                            (string.IsNullOrEmpty(inventoryName) || inv.InventoryName.Contains(inventoryName, StringComparison.OrdinalIgnoreCase)) &&
+                            (string.IsNullOrEmpty(inventoryName) || inv.InventoryName.ToLower().IndexOf(inventoryName.ToLower()) >= 0) &&
                             (!dateFrom.HasValue || it.TransactionDate >= dateFrom.Value) &&
                             (!dateTo.HasValue || it.TransactionDate <= dateTo.Value) &&
                             (!transactionType.HasValue || it.ActivityType == transactionType)

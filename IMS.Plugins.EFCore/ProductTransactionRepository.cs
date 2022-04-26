@@ -84,7 +84,7 @@ namespace IMS.Plugins.EFCore
             var query = from pt in db.ProductTransactions
                         join prod in db.Products on pt.ProductId equals prod.ProductId
                         where
-                            (string.IsNullOrWhiteSpace(productName) || prod.ProductName.Contains(productName, StringComparison.OrdinalIgnoreCase)) &&
+                            (string.IsNullOrWhiteSpace(productName) || prod.ProductName.ToLower().IndexOf(productName.ToLower()) >= 0) &&
                             (!dateFrom.HasValue || pt.TransactionDate >= dateFrom.Value.Date) &&
                             (!dateTo.HasValue || pt.TransactionDate <= dateTo.Value) &&
                             (!transactionType.HasValue || pt.ActivityType == transactionType)

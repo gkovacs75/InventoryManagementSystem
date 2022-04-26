@@ -1,0 +1,8 @@
+﻿1. Set the startup project to Web
+2. In PM window, set Default project to EFCore
+3. Supply a name for the Migration: Init
+4. Supply a name for which Context to use: IMSContext
+5. Run Add-Migration Init -Context IMSContext
+6. The Migration folder will now be created in the Default project
+7. Run Update-Database Init -Context IMSContext
+8. The database, tables, etc. will now be created in the database

@@ -54,8 +54,10 @@ var app = builder.Build();
 
 var scope = app.Services.CreateScope();
 var imsContext = scope.ServiceProvider.GetRequiredService<IMSContext>();
-imsContext.Database.EnsureDeleted();
-imsContext.Database.EnsureCreated();
+
+// These can be commented out once the DB is created...I think
+//imsContext.Database.EnsureDeleted();
+//imsContext.Database.EnsureCreated();
 
 
 // Configure the HTTP request pipeline.
